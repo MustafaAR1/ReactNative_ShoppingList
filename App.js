@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
 import {View,Text,StyleSheet,FlatList} from 'react-native';
 import Header from './components/header';
+import ListItem from './components/ListItem';
+import AddItem from './components/AddItem';
 //import { uuid } from 'uuidv4';
 const App = () => {
   const [items,setItems] = useState([
@@ -10,12 +12,29 @@ const App = () => {
     {id:56,title:"grapes"},
     
   ]);
+  const deleteItem= (id) => {
+    setItems(prevItem => {
+   return prevItem.filter(item => item.id !=id);
+    });
+  }
+
+  const addItems = (item) => {
+    setItems(prevItem => {
+      return [{id:34,text:item},  ...prevItem];
+    });
+  }
+
+ 
   return (
-    <View style = {styles.container}>
+   
+  <View style = {styles.container}>
+
   <Header />
+  <AddItem AddItem={AddItems} />
   <FlatList 
   data={items}
-  renderItem= {({item}) => <Text style={styles.container} >{item.title}</Text>} 
+  renderItem= {({item}) => <ListItem item={item} 
+  deleteItem={deleteItem} />} 
   />
     </View> 
   );
